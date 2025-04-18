@@ -6,8 +6,13 @@ const sendToken = async (user, statusCode, res) => {
  
 
   const options = {
-    expires: new Date(Date.now() + 24 * 60 * 60 * 1000), // 1 day
-   
+
+  httpOnly: true,
+  secure: true,           // ✅ Because you're on HTTPS
+  sameSite: 'none',       // ✅ Required for cross-domain cookies
+  path: '/',
+  expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
+
   };
 
   res.status(statusCode).cookie("token", token, options).json({
