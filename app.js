@@ -15,14 +15,12 @@ app.use(express.json());
 app.use(express.json({ limit: "50mb" }));
 app.use(express.urlencoded({ limit: "50mb", extended: true }));
 app.use(cookieParser());
-const allowedOrigins = true; // wildcard behavior
 app.use(cors({
-  origin: function (origin, callback) {
-    // If no origin (like curl or Postman), allow it
-    if (!origin) return callback(null, true);
-    return callback(null, origin); // Reflect the origin dynamically
+  origin: (origin, callback) => {
+    // This allows all domains
+    callback(null, true);  // true means allow any origin
   },
-  credentials: true, // ✅ Required for cookies/auth headers
+  credentials: true, // ✅ Allow credentials (cookies, session, etc.)
 }));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(fileupload());
