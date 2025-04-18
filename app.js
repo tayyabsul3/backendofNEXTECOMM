@@ -16,7 +16,10 @@ app.use(express.json({ limit: "50mb" }));
 app.use(express.urlencoded({ limit: "50mb", extended: true }));
 app.use(cookieParser());
 app.use(
-  cors()
+   cors({
+     origin: 'https://next-store-ruddy-three.vercel.app', // Replace with your frontend URL
+     credentials: true, // Allow cookies
+   })
 );
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(fileupload());
