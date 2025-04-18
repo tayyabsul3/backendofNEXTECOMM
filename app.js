@@ -15,12 +15,15 @@ app.use(express.json());
 app.use(express.json({ limit: "50mb" }));
 app.use(express.urlencoded({ limit: "50mb", extended: true }));
 app.use(cookieParser());
-app.use(
-   cors({
-     origin: 'https://next-store-ruddy-three.vercel.app', // Replace with your frontend URL
-     credentials: true, // Allow cookies
-   })
-);
+const allowedOrigins = true; // wildcard behavior
+app.use(cors({
+  origin: function (origin, callback) {
+    // If no origin (like curl or Postman), allow it
+    if (!origin) return callback(null, true);
+    return callback(null, origin); // Reflect the origin dynamically
+  },
+  credentials: true, // ✅ Required for cookies/auth headers
+}));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(fileupload());
 
